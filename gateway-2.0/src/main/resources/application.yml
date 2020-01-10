@@ -1,0 +1,11 @@
+netty:
+  port: 8081
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: AUTO
+  mapper-locations: classpath:/mapper/*.xml
+
+spring:
+  profiles:
+    active: local

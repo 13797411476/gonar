@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.1.174:8808/gateway
+    username: bbc_lishe
+    password: lishekeji

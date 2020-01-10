@@ -1,0 +1,19 @@
+server:
+  port: 20000
+dynamic.datasource:
+    shop:
+      url: jdbc:mysql://192.168.1.174:8707/bbc?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8
+      username: bbc
+      password: bbc@1234
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    saas:
+      url: jdbc:mysql://192.168.1.174:8817/db_lishe?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8
+      username: lishe
+      password: lishe!@#$%68
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    crm:
+      url: jdbc:mysql://192.168.1.174:8808/crm?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8
+      username: saas_lishe
+      password: lishe1q2w3e4r
+      driver-class-name: com.mysql.cj.jdbc.Driver
+

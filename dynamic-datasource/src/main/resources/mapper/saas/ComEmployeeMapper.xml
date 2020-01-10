@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gonar.dynamicdatasource.saas.dao.ComEmployeeMapper">
+
+    <select id="selectLoginInfo" resultType="com.gonar.dynamicdatasource.saas.entity.EmpInfo">
+        select DISTINCT ce.user_id userId, DATE_FORMAT(ce.login_time,'%Y-%m-%d') loginTime from t_com_employee ce, t_user_identity ui
+        where ce.user_id = ui.user_id and ce.login_time is not null
+          and ui.com_id = #{comId}
+    </select>
+    <select id="selectUnLoginInfo" resultType="com.gonar.dynamicdatasource.saas.entity.EmpInfo">
+        select DISTINCT ce.user_id userId, DATE_FORMAT(ce.login_time,'%Y-%m-%d') loginTime from t_com_employee ce, t_user_identity ui
+        where ce.user_id = ui.user_id and ce.login_time is null
+          and ui.com_id = #{comId}
+    </select>
+    <select id="selectConsumeInfo" resultType="com.gonar.dynamicdatasource.saas.entity.EmpInfo">
+        SELECT
+            t.user_id userId,
+            t.trade_time loginTime
+        FROM
+            t_com_trade t
+        WHERE
+              t.com_id = #{comId} and
+                t.user_id 
+                <foreach collection="week" separator="," open=" in (" close=")" item="userId">
+                    #{userId}
+                </foreach>
+    </select>
+</mapper>
