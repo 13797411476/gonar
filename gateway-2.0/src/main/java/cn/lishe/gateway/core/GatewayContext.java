@@ -11,10 +11,29 @@ public class GatewayContext {
 
     private ChannelHandlerContext ctx;
     private FullHttpRequest request;
+    private long traceId;
+    private String realUrl;
 
     public GatewayContext(ChannelHandlerContext ctx, FullHttpRequest request) {
         this.ctx = ctx;
         this.request = request;
+    }
+
+
+    public long getTraceId() {
+        return traceId;
+    }
+
+    public void setTraceId(long traceId) {
+        this.traceId = traceId;
+    }
+
+    public String getRealUrl() {
+        return realUrl;
+    }
+
+    public void setRealUrl(String realUrl) {
+        this.realUrl = realUrl;
     }
 
     public ChannelHandlerContext getCtx() {

@@ -2,10 +2,11 @@ package cn.lishe.gateway.core;
 
 import cn.lishe.gateway.filter.GatewayRouterFilter;
 import cn.lishe.gateway.filter.GatewayRouterFilterChain;
+import cn.lishe.gateway.response.CommonResponseConfig;
+import cn.lishe.gateway.response.ResponseHandler;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.handler.codec.DecoderResult;
 import io.netty.handler.codec.http.FullHttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,12 +24,26 @@ public class RouterHandler extends SimpleChannelInboundHandler<FullHttpRequest> 
 
     @Autowired
     private List<GatewayRouterFilter> gatewayRouterFilters;
+    @Autowired
+    private ResponseHandler responseHandler;
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
-        DecoderResult decoderResult = request.decoderResult();
+        // request decoder error
+        if(!request.decoderResult().isSuccess()) {
+            responseHandler.reply(ctx, CommonResponseConfig.getRespDto(CommonResponseConfig.DECODE_ERROR));
+        }
+
+        GatewayContext gatewayContext = new GatewayContext(ctx, request);
+        gatewayContext.setTraceId(ctx.hashCode());
+        gatewayContext.setRealUrl(getRealUrl(request.uri()));
 
         gatewayRouterFilters.sort(Comparator.comparingInt(GatewayRouterFilter::order));
-        new GatewayRouterFilterChain(gatewayRouterFilters).filter(new GatewayContext(ctx, request));
+        new GatewayRouterFilterChain(gatewayRouterFilters).filter(gatewayContext);
+    }
+
+    private String getRealUrl(String uri) {
+
+        return null;
     }
 }
