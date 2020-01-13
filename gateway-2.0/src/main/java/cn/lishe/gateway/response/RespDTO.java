@@ -5,12 +5,12 @@ import java.util.Map;
 public class RespDTO {
     private long useTime;
     /**
-        0:nomal
-        1:timeout
-        2:error
+     * 0:nomal
+     * 1:timeout
+     * 2:error
      */
     private int status;
-    private Map<String,String> headers;
+    private Map<String, String> headers;
     private int code;
     private String msg;
     private byte[] content;

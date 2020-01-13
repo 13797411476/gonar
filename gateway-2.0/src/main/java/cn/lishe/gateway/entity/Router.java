@@ -1,5 +1,7 @@
 package cn.lishe.gateway.entity;
 
+import cn.lishe.gateway.enums.FuseEnum;
+import cn.lishe.gateway.enums.ReduceEnum;
 import com.baomidou.mybatisplus.annotation.TableId;
 
 public class Router {
@@ -12,11 +14,11 @@ public class Router {
     /**
      * 1-正常 0-降级中
      */
-    private Integer reduce;
+    private ReduceEnum reduce;
     /**
      * 1-正常 0-熔断中
      */
-    private Integer fuse;
+    private FuseEnum fuse;
     private String remark;
 
     public Integer getRouterId() {
@@ -59,19 +61,19 @@ public class Router {
         this.healthy = healthy;
     }
 
-    public Integer getReduce() {
+    public ReduceEnum getReduce() {
         return reduce;
     }
 
-    public void setReduce(Integer reduce) {
+    public void setReduce(ReduceEnum reduce) {
         this.reduce = reduce;
     }
 
-    public Integer getFuse() {
+    public FuseEnum getFuse() {
         return fuse;
     }
 
-    public void setFuse(Integer fuse) {
+    public void setFuse(FuseEnum fuse) {
         this.fuse = fuse;
     }
 

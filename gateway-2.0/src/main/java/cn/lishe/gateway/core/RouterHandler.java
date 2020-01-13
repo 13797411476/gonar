@@ -1,5 +1,7 @@
 package cn.lishe.gateway.core;
 
+import cn.lishe.gateway.cache.RequestCache;
+import cn.lishe.gateway.entity.Router;
 import cn.lishe.gateway.filter.GatewayRouterFilter;
 import cn.lishe.gateway.filter.GatewayRouterFilterChain;
 import cn.lishe.gateway.response.CommonResponseConfig;
@@ -36,14 +38,14 @@ public class RouterHandler extends SimpleChannelInboundHandler<FullHttpRequest> 
 
         GatewayContext gatewayContext = new GatewayContext(ctx, request);
         gatewayContext.setTraceId(ctx.hashCode());
-        gatewayContext.setRealUrl(getRealUrl(request.uri()));
+        gatewayContext.setRouter(getRouter(request.uri()));
 
         gatewayRouterFilters.sort(Comparator.comparingInt(GatewayRouterFilter::order));
         new GatewayRouterFilterChain(gatewayRouterFilters).filter(gatewayContext);
+
     }
 
-    private String getRealUrl(String uri) {
-
-        return null;
+    private Router getRouter(String uri) {
+        return RequestCache.routerMap.get(uri.toLowerCase());
     }
 }

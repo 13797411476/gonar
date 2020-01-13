@@ -19,7 +19,9 @@ public class IpFilter implements GatewayRouterFilter {
     public void filter(GatewayContext context, GatewayRouterFilterChain chain) {
         InetSocketAddress socketAddress = (InetSocketAddress) context.getCtx().channel().remoteAddress();
         String hostAddress = socketAddress.getAddress().getHostAddress();
-        System.out.println(hostAddress);
+
+
+
         chain.filter(context);
     }
 

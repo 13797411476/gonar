@@ -1,5 +1,7 @@
 package cn.lishe.gateway.core;
 
+import cn.lishe.gateway.entity.Router;
+import cn.lishe.gateway.response.RespDTO;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpRequest;
 
@@ -12,7 +14,8 @@ public class GatewayContext {
     private ChannelHandlerContext ctx;
     private FullHttpRequest request;
     private long traceId;
-    private String realUrl;
+    private Router router;
+    private RespDTO respDTO;
 
     public GatewayContext(ChannelHandlerContext ctx, FullHttpRequest request) {
         this.ctx = ctx;
@@ -28,12 +31,12 @@ public class GatewayContext {
         this.traceId = traceId;
     }
 
-    public String getRealUrl() {
-        return realUrl;
+    public Router getRouter() {
+        return router;
     }
 
-    public void setRealUrl(String realUrl) {
-        this.realUrl = realUrl;
+    public void setRouter(Router router) {
+        this.router = router;
     }
 
     public ChannelHandlerContext getCtx() {
