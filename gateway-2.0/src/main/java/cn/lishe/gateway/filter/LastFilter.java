@@ -1,8 +1,7 @@
 package cn.lishe.gateway.filter;
 
 import cn.lishe.gateway.core.GatewayContext;
-import cn.lishe.gateway.http.HttpHandler;
-import org.springframework.beans.factory.annotation.Autowired;
+import cn.lishe.gateway.handler.HttpHandler;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,8 +11,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class LastFilter implements GatewayRouterFilter {
 
-    @Autowired
-    private HttpHandler httpHandler;
+    private final HttpHandler httpHandler;
+
+    public LastFilter(HttpHandler httpHandler) {
+        this.httpHandler = httpHandler;
+    }
 
     @Override
     public void filter(GatewayContext context, GatewayRouterFilterChain chain) {

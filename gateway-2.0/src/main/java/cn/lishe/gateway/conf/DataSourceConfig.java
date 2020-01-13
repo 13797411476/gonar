@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @MapperScan("cn.lishe.gateway.mapper")
-public class DevDataSourceConfig {
+public class DataSourceConfig {
     /**
      * 乐观锁配置
      */

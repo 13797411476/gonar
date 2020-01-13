@@ -1,5 +1,6 @@
 package cn.lishe.gateway.http;
 
+import cn.lishe.gateway.enums.ResultCode;
 import cn.lishe.gateway.response.CommonResponseConfig;
 import cn.lishe.gateway.response.RespDTO;
 import io.netty.handler.codec.http.FullHttpRequest;
@@ -8,10 +9,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
-/**
- * @author YeJin
- * @date 2019/11/12 16:11
- */
+
 @Component
 public class ProxyRequest {
 
@@ -28,10 +26,10 @@ public class ProxyRequest {
         } else if (method.equals(HttpMethod.POST)) {
             result = proxyPostRequest.doPost( realUrl,  request);
         } else {
-            //other method,unsurpport
+            //other method not support
             result = new RespDTO();
-            //error
-            result.setStatus(2);
+            result.setCode(ResultCode.http_method_not_support.getCode());
+            result.setMsg(ResultCode.http_method_not_support.getMsg());
             result.setContent(CommonResponseConfig.UNSURPPORT_METHOD.getBytes());
         }
         return result;

@@ -1,6 +1,7 @@
 package cn.lishe.gateway.http;
 
 import cn.lishe.gateway.conf.HeaderConfig;
+import cn.lishe.gateway.enums.ResultCode;
 import cn.lishe.gateway.response.RespDTO;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpHeaders;
@@ -23,10 +24,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author YeJin
- * @date 2019/11/12 16:15
- */
+
 @Component
 public class ProxyPostRequest {
 
@@ -57,7 +55,10 @@ public class ProxyPostRequest {
                     return proxyPostRaw(realUrl, reqBytes, headers);
                 } catch (Exception e) {
                     lg.error("post 封装数据出现异常", e);
-                    return RespDTO.error("系统繁忙101");
+                    RespDTO respDTO = new RespDTO();
+                    respDTO.setCode(ResultCode.http_proxy_error.getCode());
+                    respDTO.setMsg(ResultCode.http_proxy_error.getMsg());
+                    return respDTO;
                 }
             }
         }

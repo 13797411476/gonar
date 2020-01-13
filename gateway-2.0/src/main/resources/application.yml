@@ -5,6 +5,7 @@ mybatis-plus:
     db-config:
       id-type: AUTO
   mapper-locations: classpath:/mapper/*.xml
+  type-enums-package: cn.lishe.gateway.enums
 
 spring:
   profiles:

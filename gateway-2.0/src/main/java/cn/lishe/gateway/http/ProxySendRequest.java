@@ -1,5 +1,6 @@
 package cn.lishe.gateway.http;
 
+import cn.lishe.gateway.enums.ResultCode;
 import cn.lishe.gateway.response.RespDTO;
 import org.apache.http.Header;
 import org.apache.http.HeaderIterator;
@@ -12,14 +13,11 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Component;
 
+import javax.xml.transform.Result;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author YeJin
- * @date 2019/11/12 16:19
- */
 @Component
 public class ProxySendRequest {
 
@@ -64,16 +62,17 @@ public class ProxySendRequest {
                     Header header = (Header) headerIterator.next();
                     headersMap.put(header.getName(), header.getValue());
                 }
-
-                respDTO.setCode(statusCode);
-                respDTO.setStatus(0);
+                if(statusCode == 301 || statusCode == 302) {
+                    respDTO.setCode(ResultCode.http_redirect.getCode());
+                }else{
+                    respDTO.setCode(ResultCode.success.getCode());
+                }
                 respDTO.setContent(bytes);
                 respDTO.setHeaders(headersMap);
 
-
             } else {
-                respDTO.setCode(statusCode);
-                respDTO.setStatus(statusCode);
+                respDTO.setCode(ResultCode.http_proxy_error.getCode());
+                respDTO.setMsg(ResultCode.http_proxy_error.getMsg());
             }
 
             respDTO.setUseTime(useTime);
@@ -81,12 +80,12 @@ public class ProxySendRequest {
             if (retryCount < 3) {
                 respDTO = retry(req, ++retryCount);
             } else {
-                respDTO.setStatus(1);
+                respDTO.setCode(ResultCode.http_proxy_error.getCode());
+                respDTO.setMsg(ResultCode.http_proxy_error.getMsg());
                 long useTime = System.currentTimeMillis() - timeStart;
                 respDTO.setUseTime(useTime);
             }
         }
-
         return respDTO;
     }
 

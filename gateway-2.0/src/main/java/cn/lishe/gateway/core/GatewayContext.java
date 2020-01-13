@@ -23,6 +23,14 @@ public class GatewayContext {
     }
 
 
+    public RespDTO getRespDTO() {
+        return respDTO;
+    }
+
+    public void setRespDTO(RespDTO respDTO) {
+        this.respDTO = respDTO;
+    }
+
     public long getTraceId() {
         return traceId;
     }

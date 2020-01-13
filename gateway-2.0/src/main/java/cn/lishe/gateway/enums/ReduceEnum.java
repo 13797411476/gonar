@@ -1,14 +1,16 @@
 package cn.lishe.gateway.enums;
 
-public enum  ReduceEnum {
+import com.baomidou.mybatisplus.core.enums.IEnum;
+
+public enum ReduceEnum implements IEnum<Integer> {
     /**
      * 正常
      */
-    normal(0),
+    normal(1),
     /**
      * 降级中
      */
-    reducing(1);
+    reducing(0);
 
     private int code;
 
@@ -18,5 +20,10 @@ public enum  ReduceEnum {
 
     public int getCode() {
         return code;
+    }
+
+    @Override
+    public Integer getValue() {
+        return this.code;
     }
 }

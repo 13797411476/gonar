@@ -1,6 +1,7 @@
 package cn.lishe.gateway.http;
 
 import cn.lishe.gateway.conf.HeaderConfig;
+import cn.lishe.gateway.enums.ResultCode;
 import cn.lishe.gateway.response.RespDTO;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpHeaders;
@@ -12,10 +13,7 @@ import javax.annotation.Resource;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * @author YeJin
- * @date 2019/11/12 16:15
- */
+
 @Component
 public class ProxyGetRequest {
     private Pattern pattern = Pattern.compile("(.*)\\(([\\{\\[].*[\\}\\]])\\)$");
@@ -60,7 +58,7 @@ public class ProxyGetRequest {
      * @return jsonp处理后返回实体
      */
     private RespDTO dealJsonp(RespDTO respDTO, String callbackMethod) {
-        if (respDTO.getStatus() != 0) {
+        if (respDTO.getCode() != ResultCode.success.getCode()) {
             return respDTO;
         }
         byte[] contentByte = respDTO.getContent();
